@@ -1,18 +1,22 @@
-import viteSvg from '~/assets/vite.svg';
 import { useTranslation } from 'react-i18next';
-import LangPicker from './components/LangPicker';
+import LanguagePicker from './components/LanguagePicker';
+import { lazy, Suspense } from 'react';
+import ErrorBoundary from './components/ui/ErrorBoundary';
+
+const Hero = lazy(() => import('./components/Hero'));
 
 function App() {
-  const { t } = useTranslation();
+  useTranslation();
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <LangPicker />
-        <h1 className="text-3xl font-bold">{t('title')}</h1>
-        <img src={viteSvg} alt="Vite logo" />
-      </div>
-    </>
+    <div className="container mx-auto flex min-h-screen flex-col items-center gap-4 p-4 sm:gap-7">
+      <LanguagePicker />
+      <ErrorBoundary>
+        <Suspense>
+          <Hero />
+        </Suspense>
+      </ErrorBoundary>
+    </div>
   );
 }
 
